@@ -15,8 +15,8 @@ spring:
         server-addr: localhost:8848
   ai:
     openai:
-      api-key: AI_API_KE          # 从环境变量读取，不要硬编码
-      base-url: `AI_BASE_URL` # 如果使用兼容接口，修改此处
+      api-key: AI_API_KE          
+      base-url: AI_BASE_URL   # 如果使用兼容接口，修改此处
       chat:
         options:
           model: glm-5.3-Flash           # 或你使用的模型
