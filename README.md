@@ -120,7 +120,7 @@ user_db  survey_db response_db  MinIO   ai_evaluation
 ### 步骤一：克隆项目
 
 ```bash
-git clone https://github.com/your-name/survey-system.git
+git clone https://github.com/whoaddd/survey-system.git
 cd survey-system
 ```
 
