@@ -1,0 +1,49 @@
+server:
+  port: 9004
+
+spring:
+  application:
+    name: ai-orchestrator
+  datasource:
+    url: jdbc:mysql://localhost:3307/response_db?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: Survey@2026
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  ai:
+    openai:
+      api-key: AI_API_KE          # 从环境变量读取，不要硬编码
+      base-url: `AI_BASE_URL` # 如果使用兼容接口，修改此处
+      chat:
+        options:
+          model: glm-5.3-Flash           # 或你使用的模型
+          temperature: 0                 # 评分场景建议设为 0，减少随机性
+    retry: # 重试配置（Spring AI 自动配置）[10†L17-L24]
+      max-attempts: 3
+      backoff:
+        initial-interval: 2000ms
+        multiplier: 2
+        max-interval: 10000ms
+      exclude-on-http-codes: [ 400, 401 ] # 参数/鉴权错误不重试
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      id-type: auto
+
+ai:
+  prompt-version: v1.0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always

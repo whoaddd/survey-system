@@ -1,0 +1,71 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+
+    gateway:
+      routes:
+        # ===== 具体路径（必须放最前）=====
+        - id: user-auth
+          uri: lb://user-service
+          predicates:
+            - Path=/api/auth/**
+
+        - id: public-survey
+          uri: lb://response-service
+          predicates:
+            - Path=/api/public/**
+
+        - id: survey-results
+          uri: lb://response-service
+          predicates:
+            - Path=/api/surveys/*/responses,/api/surveys/*/statistics
+
+        # ===== 通用路径（放后面）=====
+        - id: survey-crud
+          uri: lb://survey-service
+          predicates:
+            - Path=/api/surveys/**
+
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/api/user/**
+
+        - id: survey-service-legacy
+          uri: lb://survey-service
+          predicates:
+            - Path=/api/survey/**
+
+        - id: response-service
+          uri: lb://response-service
+          predicates:
+            - Path=/api/response/**
+
+        - id: file-service
+          uri: lb://file-service
+          predicates:
+            - Path=/api/file/**
+
+        - id: ai-orchestrator
+          uri: lb://ai-orchestrator
+          predicates:
+            - Path=/api/ai/**
+
+jwt:
+  secret: SurveyJwtSecretKeyAtLeast32BytesLongForHS256!!
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always

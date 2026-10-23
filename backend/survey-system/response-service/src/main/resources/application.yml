@@ -1,0 +1,51 @@
+server:
+  port: 9003
+
+spring:
+  application:
+    name: response-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  datasource:
+    dynamic:
+      primary: response
+      strict: true
+      datasource:
+        response:
+          url: jdbc:mysql://localhost:3307/response_db?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+          username: root
+          password: Survey@2026
+          driver-class-name: com.mysql.cj.jdbc.Driver
+        survey:
+          url: jdbc:mysql://localhost:3307/survey_db?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+          username: root
+          password: Survey@2026
+          driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: Redis@2026
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+
+jwt:
+  secret: SurveyJwtSecretKeyAtLeast32BytesLongForHS256!!
+
+# 限流配置（可调整）
+rate-limit:
+  public-fetch-per-minute: 60     # 单个 IP 每分钟拉取公开问卷的次数
+  submit-per-hour: 5              # 单个 IP 每小时提交答卷的次数
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always

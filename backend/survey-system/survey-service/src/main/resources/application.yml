@@ -1,0 +1,31 @@
+server:
+  port: 9002
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+
+jwt:
+  secret: SurveyJwtSecretKeyAtLeast32BytesLongForHS256!!
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3307/survey_db?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&useUnicode=true
+    username: root
+    password: Survey@2026
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  application:
+    name: survey-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always

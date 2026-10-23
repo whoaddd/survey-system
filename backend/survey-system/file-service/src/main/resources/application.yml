@@ -1,0 +1,44 @@
+server:
+  port: 9005
+
+spring:
+  application:
+    name: file-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+  datasource:
+    url: jdbc:mysql://localhost:3307/response_db?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: Survey@2026
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+
+# MinIO 配置
+minio:
+  endpoint: http://localhost:9000        # S4 阶段 file-service 在 IDEA 跑；S6 迁移容器后改 http://minio:9000
+  access-key: ${MINIO_ACCESS_KEY:minioadmin}
+  secret-key: ${MINIO_SECRET_KEY:Minio@2026}
+  bucket: survey-files
+  presign-expire-seconds: 300            # 预签名 URL 有效期 5 分钟
+  max-file-size: 10485760                # 单文件最大 10MB
+
+jwt:
+  secret: SurveyJwtSecretKeyAtLeast32BytesLongForHS256!!
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
