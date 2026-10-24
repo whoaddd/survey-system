@@ -318,7 +318,7 @@ survey-system/
 
 **AI 相关**（`ai-orchestrator` 启动前配置）：
 
-请替换自己的api和接口
+请在survey-system/backend/survey-system/ai-orchestrator/src/main/resources/application.yml替换自己的api和接口
 
 | 变量          | 说明                                              |
 | ------------- | ------------------------------------------------- |
